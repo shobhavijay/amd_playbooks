@@ -23,6 +23,26 @@ unattended — `#RECOVERIES: 1`, GPU driver clean, no manual relaunch.
 **Validated on:** 8× MI300X VF (gfx942) · Ubuntu 24.04 · k3s v1.36 · SkyPilot 0.13 ·
 vcluster 0.36 · single node.
 
+### [Moving a running AI agent between clusters](agent-failover-playbook.md)
+
+Take the same two-vcluster setup further: run a real LangGraph agent as a managed job,
+kill it mid-batch, and have it resume in the other cluster without redoing work it had
+already paid for.
+
+Covers: externalising agent state to Postgres, Chroma and MinIO outside both clusters,
+LangGraph checkpointing with `durability="sync"`, a claim ledger with attempt counts, and
+how to tell a genuine resume apart from a silent restart.
+
+**Result:** 9 recipes completed across the two clusters after a forced failover, with
+`max_attempt = 1` on every one — no photograph processed twice, roughly 54 inference calls
+against a 72B model not re-bought.
+
+The agent source is in [`culinary-archivist-agent.tar.gz`](culinary-archivist-agent.tar.gz);
+step 1 of the playbook copies it onto the host.
+
+**Validated on:** 8× MI300X VF (gfx942) · Ubuntu 24.04 · k3s · SkyPilot managed jobs ·
+vcluster 0.36 · Qwen2.5-72B + Qwen2.5-VL-7B · single node.
+
 ## Notes
 
 Version-sensitive: the commands reflect the tool versions listed with each playbook.
