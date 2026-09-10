@@ -14,7 +14,7 @@ ever show it to you.
 
 ## The reality of "silent restarts"
 
-I recently stress-tested an agentic data pipeline running on an AMD 8×MI300X
+I recently tested an agentic data pipeline running on an AMD 8×MI300X
 node, split into two isolated virtual clusters. The agent's task was to process a
 batch of 39 visual assets. For every single asset it makes nine distinct
 LLM calls against a 72-billion-parameter model.
